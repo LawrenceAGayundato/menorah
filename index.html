@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
+    <!-- Modern Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -41,7 +44,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(15px);
             position: fixed;
             width: 100%;
@@ -58,6 +61,12 @@
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             letter-spacing: 1px;
+            z-index: 1001; 
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a {
@@ -65,7 +74,7 @@
             text-decoration: none;
             margin-left: 2rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
@@ -73,7 +82,16 @@
             color: var(--accent-neon);
         }
 
-        /* Hero Section with 3D Vanta.js Background */
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: var(--text-light);
+            z-index: 1001; 
+            user-select: none;
+        }
+
+        /* Hero Section */
         .hero-container {
             position: relative;
             min-height: 100vh;
@@ -82,8 +100,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 1rem;
-            margin-top: 0;
+            padding: 5rem 1rem 2rem 1rem;
             overflow: hidden;
         }
 
@@ -97,14 +114,15 @@
         }
 
         .hero-content {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
             padding: 3rem;
             border-radius: 24px;
             border: var(--glass-border);
             max-width: 800px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             transform-style: preserve-3d;
+            width: 95%;
         }
 
         .hero-content h1 {
@@ -138,7 +156,9 @@
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 1.5rem;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             letter-spacing: 0.5px;
             transform: translateZ(40px);
         }
@@ -146,7 +166,7 @@
         .btn {
             background: var(--gradient-primary);
             color: #000;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 800;
@@ -190,13 +210,16 @@
             text-transform: uppercase;
             font-weight: bold;
             letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* Container & Grid */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 5rem 2rem;
+            padding: 5rem 1.5rem;
         }
 
         .section-title {
@@ -204,6 +227,7 @@
             font-size: 2.5rem;
             margin-bottom: 1rem;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .section-subtitle {
@@ -215,7 +239,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
@@ -235,13 +259,8 @@
             border-color: var(--accent-neon);
         }
 
-        .card h3, .card h4 {
-            transform: translateZ(30px);
-        }
-        
-        .card p {
-            transform: translateZ(20px);
-        }
+        .card h3, .card h4 { transform: translateZ(30px); }
+        .card p { transform: translateZ(20px); }
 
         .price-tag {
             font-size: 2.5rem;
@@ -251,7 +270,7 @@
             transform: translateZ(40px);
         }
 
-        /* Expanded Amenities Grid */
+        /* Modern Amenities Grid */
         .amenities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -261,8 +280,8 @@
         
         .amenity {
             text-align: center;
-            padding: 2rem 1.5rem;
-            background: rgba(255,255,255,0.03);
+            padding: 2.5rem 1.5rem;
+            background: rgba(255,255,255,0.02);
             border-radius: 12px;
             border: var(--glass-border);
             transform-style: preserve-3d;
@@ -272,21 +291,23 @@
         .highlighted-amenity {
             background: rgba(0, 242, 254, 0.05);
             border: 1px solid rgba(0, 242, 254, 0.4);
-            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.05);
         }
 
-        .highlighted-amenity h4 {
+        .highlighted-amenity h4 { color: var(--accent-neon); }
+
+        /* Modern SVG Icon Styling */
+        .amenity-icon i {
             color: var(--accent-neon);
-        }
-
-        .highlighted-amenity .amenity-icon {
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
-        }
-
-        .amenity-icon {
-            font-size: 2.5rem;
+            width: 48px;
+            height: 48px;
             margin-bottom: 1rem;
             transform: translateZ(30px);
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.4));
+        }
+
+        .highlighted-amenity .amenity-icon i {
+            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.8));
         }
 
         /* Visual Gallery */
@@ -328,9 +349,17 @@
             transform-style: preserve-3d;
         }
 
+        .calc-flex-container {
+            display: flex; 
+            gap: 1rem; 
+            margin-bottom: 1.5rem; 
+            flex-wrap: wrap;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
             transform: translateZ(20px);
+            width: 100%;
         }
 
         .form-group label {
@@ -367,6 +396,8 @@
             font-size: 0.9rem;
             font-weight: 600;
             transform: translateZ(30px);
+            align-items: center;
+            gap: 10px;
         }
 
         /* Modal Styles */
@@ -376,7 +407,7 @@
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(10px);
             z-index: 9999;
-            display: none; /* Hidden by default */
+            display: none; 
             justify-content: center;
             align-items: center;
             opacity: 0;
@@ -392,13 +423,15 @@
             background: #1e293b;
             border: 1px solid var(--accent-neon);
             border-radius: 20px;
-            padding: 2.5rem;
-            width: 90%;
+            padding: 2rem;
+            width: 95%;
             max-width: 500px;
             position: relative;
             transform: translateY(-30px) scale(0.95);
             transition: all 0.3s ease;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .modal-content {
@@ -409,31 +442,32 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--text-muted);
             cursor: pointer;
             transition: color 0.3s;
         }
 
-        .close-btn:hover {
-            color: white;
-        }
+        .close-btn:hover { color: white; }
 
         .payment-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .payment-option {
             background: rgba(15, 23, 42, 0.8);
             border: var(--glass-border);
-            padding: 1rem;
+            padding: 1.2rem 1rem;
             border-radius: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .payment-option:hover {
@@ -442,14 +476,15 @@
             transform: translateY(-3px);
         }
 
-        .payment-option span {
-            display: block;
-            font-size: 1.8rem;
+        .payment-option i {
+            color: var(--accent-neon);
+            width: 32px;
+            height: 32px;
             margin-bottom: 0.5rem;
         }
 
         .payment-option p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
@@ -463,10 +498,39 @@
             border-top: var(--glass-border);
         }
 
+        /* =========================================
+           MOBILE RESPONSIVE MEDIA QUERIES
+           ========================================= */
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.8rem; }
-            .nav-links { display: none; }
-            .promo-ad-banner { text-align: center; justify-content: center; }
+            .hamburger { display: block; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%; 
+                width: 70%;
+                height: 100vh;
+                background: rgba(15, 23, 42, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s ease-in-out;
+                border-left: var(--glass-border);
+            }
+
+            .nav-links.active { right: 0; }
+            .nav-links a { margin: 1.5rem 0; font-size: 1.5rem; }
+            .hero-content { padding: 2rem 1.5rem; }
+            .hero-content h1 { font-size: 2.6rem; }
+            .hero-content p { font-size: 1rem; }
+            .section-title { font-size: 2rem; }
+            .promo-ad-banner { text-align: center; justify-content: center; margin-top: -2rem; }
+            .calc-flex-container { flex-direction: column; }
+            .payment-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 1.5rem; }
+            .container { padding: 4rem 1rem; }
+            .card { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -475,12 +539,16 @@
     <!-- Header Navigation -->
     <header>
         <a href="#" class="logo">MENORAH</a>
-        <nav class="nav-links">
-            <a href="#gallery">Space</a>
-            <a href="#amenities">Features</a>
-            <a href="#rates">Rates</a>
-            <a href="#earlybirds">Early Birds</a>
-            <a href="#calculator">Book</a>
+        
+        <!-- Mobile Hamburger Icon -->
+        <div class="hamburger" onclick="toggleMenu()"><i data-lucide="menu"></i></div>
+
+        <nav class="nav-links" id="navMenu">
+            <a href="#gallery" onclick="toggleMenu()">Space</a>
+            <a href="#amenities" onclick="toggleMenu()">Features</a>
+            <a href="#rates" onclick="toggleMenu()">Rates</a>
+            <a href="#earlybirds" onclick="toggleMenu()">Early Birds</a>
+            <a href="#calculator" onclick="toggleMenu()">Book</a>
         </nav>
     </header>
 
@@ -490,7 +558,7 @@
         <div id="vanta-canvas"></div>
         
         <div class="hero-content" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-            <span class="badge">📍 Tungkong Manga, San Jose Del Monte</span>
+            <span class="badge"><i data-lucide="map-pin" style="width: 14px; height: 14px;"></i> Tungkong Manga, SJDM</span>
             <h1>Level Up Your Grind at <br><span>Menorah Co-Working Space</span></h1>
             <p>The ultimate tech-fueled aesthetic hub for professionals, content creators, and Gen Z builders. High-speed fiber internet, free coffee, and zero distractions.</p>
             <a href="#calculator" class="btn">Secure Your Desk</a>
@@ -500,7 +568,7 @@
     <!-- Viral Marketing Ad -->
     <div class="promo-ad-banner" data-tilt data-tilt-max="3" data-tilt-axis="y">
         <div>
-            <span class="ad-tag">Viral Deal 🔥</span>
+            <span class="ad-tag"><i data-lucide="flame" style="width: 14px; height: 14px;"></i> Viral Deal</span>
             <h3 style="margin-top: 0.5rem; color: white;">Share Menorah on TikTok/FB & Get 1 Hour FREE!</h3>
             <p style="color: #cbd5e1; font-size: 0.9rem; margin-top: 5px;">Show your post to the front desk to claim your instant credit pass.</p>
         </div>
@@ -525,43 +593,43 @@
         <p class="section-subtitle">Fully equipped so you can focus entirely on your work.</p>
         <div class="amenities-grid">
             <div class="amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">🚀</div>
+                <div class="amenity-icon"><i data-lucide="wifi"></i></div>
                 <h4>Gigabit Wi-Fi</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Seamless Zoom calls & lightning-fast file uploads.</p>
             </div>
             
             <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">🎙️</div>
+                <div class="amenity-icon"><i data-lucide="headphones"></i></div>
                 <h4>Privacy Pods</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Soundproofed booths for confidential calls, meetings, or podcast recordings.</p>
             </div>
 
             <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">🖨️</div>
+                <div class="amenity-icon"><i data-lucide="printer"></i></div>
                 <h4>Print & Photocopy</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Full-color laser printing, scanning, and high-volume photocopying on site.</p>
             </div>
 
             <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">📎</div>
+                <div class="amenity-icon"><i data-lucide="paperclip"></i></div>
                 <h4>Office Supplies</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Access to staplers, paper clips, pens, notepads, and basic stationery essentials.</p>
             </div>
 
             <div class="amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">☕</div>
+                <div class="amenity-icon"><i data-lucide="coffee"></i></div>
                 <h4>Unlimited Brews</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Free flowing coffee & a dedicated hydration station.</p>
             </div>
 
             <div class="amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">🪑</div>
+                <div class="amenity-icon"><i data-lucide="armchair"></i></div>
                 <h4>Ergo Chairs</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Posture-supportive seating built for long hours of grinding.</p>
             </div>
 
             <div class="amenity" data-tilt data-tilt-max="15">
-                <div class="amenity-icon">🍱</div>
+                <div class="amenity-icon"><i data-lucide="microwave"></i></div>
                 <h4>Pantry & Break Area</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">A dedicated space to heat up meals, grab a snack, and recharge away from your desk.</p>
             </div>
@@ -601,7 +669,7 @@
         <div class="grid">
             <div class="card" data-tilt data-tilt-max="15">
                 <h4 style="color: var(--accent-neon);">01. The Brew Upgrade</h4>
-                <p style="margin-top: 0.5rem; color: var(--text-muted);">Complimentary iced matcha or premium espresso beverage with your standard ₱80 entry block.</p>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Complimentary premium espresso or cold brew beverage with your standard ₱80 entry block.</p>
             </div>
             <div class="card" data-tilt data-tilt-max="15">
                 <h4 style="color: var(--accent-neon);">02. Seat Immunity</h4>
@@ -621,7 +689,7 @@
         
         <div class="calculator-box" data-tilt data-tilt-max="2" data-tilt-speed="1000">
             
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div class="calc-flex-container">
                 <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
                     <label for="pax">Number of People:</label>
                     <input type="number" id="pax" min="1" max="20" value="1" oninput="calculateTotal()">
@@ -652,16 +720,18 @@
             </div>
 
             <div id="conference-alert" class="highlight-alert" style="border-color: #3b82f6; color: #60a5fa; background: rgba(59, 130, 246, 0.15);">
-                🏢 <b>Boardroom Unlocked!</b> For groups of 10-12, you automatically get exclusive access to the private Conference Room at a flat group rate.
+                <i data-lucide="briefcase"></i> 
+                <span><b>Boardroom Unlocked!</b> For groups of 10-12, you automatically get exclusive access to the private Conference Room at a flat group rate.</span>
             </div>
             
             <div id="perk-alert" class="highlight-alert">
-                🌅 <b>Early Bird Applied!</b> Discounted rate applied and premium brew included!
+                <i data-lucide="sunrise"></i>
+                <span><b>Early Bird Applied!</b> Discounted rate applied and premium brew included!</span>
             </div>
 
             <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0 1.5rem 0;">
             
-            <div style="display: flex; justify-content: space-between; align-items: center; transform: translateZ(30px);">
+            <div style="display: flex; justify-content: space-between; align-items: center; transform: translateZ(30px); flex-wrap: wrap;">
                 <h4>Total Cost:</h4>
                 <div id="total-price" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-neon);">₱240</div>
             </div>
@@ -680,28 +750,28 @@
             <h4 style="margin-bottom: 1rem;">Online Payment</h4>
             <div class="payment-grid">
                 <div class="payment-option" onclick="processPayment('GCash')">
-                    <span>📱</span>
+                    <i data-lucide="smartphone"></i>
                     <p>GCash</p>
                 </div>
                 <div class="payment-option" onclick="processPayment('Maya')">
-                    <span>💳</span>
+                    <i data-lucide="credit-card"></i>
                     <p>Maya</p>
                 </div>
                 <div class="payment-option" onclick="processPayment('Bank Transfer')">
-                    <span>🏦</span>
-                    <p>InstaPay / Bank</p>
+                    <i data-lucide="landmark"></i>
+                    <p>InstaPay</p>
                 </div>
                 <div class="payment-option" onclick="processPayment('Visa / Mastercard')">
-                    <span>🪪</span>
-                    <p>Visa / Master</p>
+                    <i data-lucide="credit-card"></i>
+                    <p>Visa/Master</p>
                 </div>
             </div>
 
             <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
 
-            <h4 style="margin-bottom: 1rem;">In-Person Transaction</h4>
-            <div class="payment-option" style="display: flex; justify-content: center; align-items: center; gap: 10px;" onclick="processPayment('Cash / Over the Counter')">
-                <span style="margin: 0;">💵</span>
+            <h4 style="margin-bottom: 1rem;">In-Person</h4>
+            <div class="payment-option" style="flex-direction: row; justify-content: center; align-items: center; gap: 15px;" onclick="processPayment('Cash / Over the Counter')">
+                <i data-lucide="banknote" style="margin: 0;"></i>
                 <p style="font-size: 1rem;">Pay Cash at Counter</p>
             </div>
         </div>
@@ -717,10 +787,30 @@
     <!-- EXTERNAL 3D JAVASCRIPT LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <!-- On touch devices, vanilla tilt generally degrades gracefully to regular cards -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <!-- Interactive Logic -->
     <script>
+        // Render all Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Navigation Toggle Logic
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            // Prevent scrolling on body when menu is open
+            if(navMenu.classList.contains('active')){
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            } else {
+                // If the screen width is small (mobile), trigger the menu logic
+                if(window.innerWidth <= 768) {
+                    navMenu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+        }
+
         // Initialize 3D Background Effect
         window.addEventListener('DOMContentLoaded', () => {
             VANTA.NET({
@@ -777,9 +867,8 @@
 
             // Group Conference Logic (10 to 12 people)
             if (paxInput >= 10 && paxInput <= 12) {
-                conferenceAlert.style.display = 'block';
+                conferenceAlert.style.display = 'flex'; // Use flex for icon alignment
                 
-                // Flat rates for the whole room
                 let flatRates = {
                     hourly: 700,
                     daily: 3000,
@@ -789,7 +878,6 @@
                 };
                 total = durationValue * flatRates[durationType]; 
             } else {
-                // Standard Individual Rates
                 let baseRates = {
                     hourly: 80,
                     daily: 350,
@@ -800,11 +888,11 @@
 
                 let rate = baseRates[durationType];
 
-                // Early Bird Discount (Only applies to Hourly/Daily for individuals)
+                // Early Bird Discount
                 if ((durationType === 'hourly' || durationType === 'daily') && arrivalTime === 'earlybird') {
-                    if (durationType === 'hourly') rate = 70; // Discounted hourly
-                    if (durationType === 'daily') rate = 300; // Discounted daily
-                    perkAlert.style.display = 'block';
+                    if (durationType === 'hourly') rate = 70; 
+                    if (durationType === 'daily') rate = 300; 
+                    perkAlert.style.display = 'flex'; // Use flex for icon alignment
                 }
 
                 total = paxInput * durationValue * rate;

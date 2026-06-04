@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menorah Co-Working Space | SJDM</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --accent-neon: #00f2fe;
+            --accent-purple: #4facfe;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient-primary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-neon);
+        }
+
+        /* Hero Section with 3D Vanta.js Background */
+        .hero-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+            margin-top: 0;
+            overflow: hidden;
+        }
+
+        #vanta-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        .hero-content {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 3rem;
+            border-radius: 24px;
+            border: var(--glass-border);
+            max-width: 800px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform-style: preserve-3d;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            transform: translateZ(30px);
+        }
+
+        .hero-content h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            transform: translateZ(20px);
+        }
+
+        .badge {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--accent-neon);
+            color: var(--accent-neon);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            transform: translateZ(40px);
+        }
+
+        .btn {
+            background: var(--gradient-primary);
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            transform: translateZ(30px);
+        }
+
+        .btn:hover {
+            transform: translateZ(40px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Ad Banner */
+        .promo-ad-banner {
+            width: 90%;
+            max-width: 1100px;
+            background: linear-gradient(90deg, #1e1b4b 0%, #311042 100%);
+            border: 1px dashed var(--accent-neon);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: -3rem auto 4rem auto;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .ad-tag {
+            background: #e11d48;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Container & Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* 3D Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-neon);
+        }
+
+        .card h3, .card h4 {
+            transform: translateZ(30px);
+        }
+        
+        .card p {
+            transform: translateZ(20px);
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-neon);
+            margin: 1rem 0;
+            transform: translateZ(40px);
+        }
+
+        /* Expanded Amenities Grid */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .amenity {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: var(--glass-border);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+
+        .highlighted-amenity {
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.1);
+        }
+
+        .highlighted-amenity h4 {
+            color: var(--accent-neon);
+        }
+
+        .highlighted-amenity .amenity-icon {
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
+        }
+
+        .amenity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transform: translateZ(30px);
+        }
+
+        /* Visual Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            filter: grayscale(30%);
+            border: 2px solid transparent;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: grayscale(0%);
+            border-color: var(--accent-neon);
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Interactive Calculator */
+        .calculator-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 650px;
+            margin: 0 auto;
+            border: var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform-style: preserve-3d;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            transform: translateZ(20px);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-neon);
+        }
+
+        .highlight-alert {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transform: translateZ(30px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #1e293b;
+            border: 1px solid var(--accent-neon);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(-30px) scale(0.95);
+            transition: all 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: white;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .payment-option {
+            background: rgba(15, 23, 42, 0.8);
+            border: var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option:hover {
+            border-color: var(--accent-neon);
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .payment-option span {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-option p {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #05080e;
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: var(--glass-border);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .nav-links { display: none; }
+            .promo-ad-banner { text-align: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <a href="#" class="logo">MENORAH</a>
+        <nav class="nav-links">
+            <a href="#gallery">Space</a>
+            <a href="#amenities">Features</a>
+            <a href="#rates">Rates</a>
+            <a href="#earlybirds">Early Birds</a>
+            <a href="#calculator">Book</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section with 3D Background -->
+    <section class="hero-container">
+        <!-- 3D Canvas Div -->
+        <div id="vanta-canvas"></div>
+        
+        <div class="hero-content" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+            <span class="badge">📍 Tungkong Manga, San Jose Del Monte</span>
+            <h1>Level Up Your Grind at <br><span>Menorah Co-Working Space</span></h1>
+            <p>The ultimate tech-fueled aesthetic hub for professionals, content creators, and Gen Z builders. High-speed fiber internet, free coffee, and zero distractions.</p>
+            <a href="#calculator" class="btn">Secure Your Desk</a>
+        </div>
+    </section>
+
+    <!-- Viral Marketing Ad -->
+    <div class="promo-ad-banner" data-tilt data-tilt-max="3" data-tilt-axis="y">
+        <div>
+            <span class="ad-tag">Viral Deal 🔥</span>
+            <h3 style="margin-top: 0.5rem; color: white;">Share Menorah on TikTok/FB & Get 1 Hour FREE!</h3>
+            <p style="color: #cbd5e1; font-size: 0.9rem; margin-top: 5px;">Show your post to the front desk to claim your instant credit pass.</p>
+        </div>
+        <button class="btn" onclick="shareBusiness()">Share & Claim</button>
+    </div>
+
+    <!-- Visual Gallery Section -->
+    <section id="gallery" class="container">
+        <h2 class="section-title">The Vibe</h2>
+        <p class="section-subtitle">A modern space designed for deep focus and ultimate comfort.</p>
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&w=800&q=80" alt="Modern Coworking Space">
+            <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=800&q=80" alt="Focus Desks">
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80" alt="Conference Room">
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80" alt="Coffee Bar">
+        </div>
+    </section>
+
+    <!-- Amenities / Features -->
+    <section id="amenities" class="container" style="background: rgba(15, 23, 42, 0.3); border-radius: 24px;">
+        <h2 class="section-title">Everything You Need & More</h2>
+        <p class="section-subtitle">Fully equipped so you can focus entirely on your work.</p>
+        <div class="amenities-grid">
+            <div class="amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">🚀</div>
+                <h4>Gigabit Wi-Fi</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Seamless Zoom calls & lightning-fast file uploads.</p>
+            </div>
+            
+            <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">🎙️</div>
+                <h4>Privacy Pods</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Soundproofed booths for confidential calls, meetings, or podcast recordings.</p>
+            </div>
+
+            <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">🖨️</div>
+                <h4>Print & Photocopy</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Full-color laser printing, scanning, and high-volume photocopying on site.</p>
+            </div>
+
+            <div class="amenity highlighted-amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">📎</div>
+                <h4>Office Supplies</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Access to staplers, paper clips, pens, notepads, and basic stationery essentials.</p>
+            </div>
+
+            <div class="amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">☕</div>
+                <h4>Unlimited Brews</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Free flowing coffee & a dedicated hydration station.</p>
+            </div>
+
+            <div class="amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">🪑</div>
+                <h4>Ergo Chairs</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Posture-supportive seating built for long hours of grinding.</p>
+            </div>
+
+            <div class="amenity" data-tilt data-tilt-max="15">
+                <div class="amenity-icon">🍱</div>
+                <h4>Pantry & Break Area</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">A dedicated space to heat up meals, grab a snack, and recharge away from your desk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Rates -->
+    <section id="rates" class="container">
+        <h2 class="section-title">Flexible Passes Built For You</h2>
+        <div class="grid">
+            <div class="card" data-tilt data-tilt-max="10" data-tilt-glare="true" data-tilt-max-glare="0.3">
+                <h3>Hourly Sprint</h3>
+                <p>Perfect for quick study blocks or taking client calls.</p>
+                <div class="price-tag">₱80<span style="font-size: 1rem; color: var(--text-muted);"> / hour</span></div>
+                <p style="color: var(--text-muted);">✨ Hot desk access & Wi-Fi.</p>
+            </div>
+            <div class="card" data-tilt data-tilt-max="10" data-tilt-glare="true" data-tilt-max-glare="0.3">
+                <h3>Student Day Pass</h3>
+                <p>Designed to help you smash deadlines all day long.</p>
+                <div class="price-tag">₱350<span style="font-size: 1rem; color: var(--text-muted);"> / day</span></div>
+                <p style="color: var(--text-muted);">✨ Unlimited coffee + printing access.</p>
+            </div>
+            <div class="card" data-tilt data-tilt-max="10" data-tilt-glare="true" data-tilt-max-glare="0.4" style="border-color: var(--accent-neon); box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);">
+                <div style="background: var(--accent-neon); color: black; font-size: 0.7rem; font-weight: bold; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px;">GROUPS (10-12 PAX)</div>
+                <h3>The Boardroom</h3>
+                <p>Private conference room equipped with a 65" TV & whiteboard.</p>
+                <div class="price-tag">₱700<span style="font-size: 1rem; color: var(--text-muted);"> / hour</span></div>
+                <p style="color: var(--text-muted);">✨ Flat rate for the whole group.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Early Bird Perks -->
+    <section id="earlybirds" style="background: rgba(15, 23, 42, 0.5); border-radius: 24px;" class="container">
+        <h2 class="section-title">🌅 Early Bird Perks</h2>
+        <p class="section-subtitle">Beat the rush hour! Check into Menorah between <b>6:00 AM and 9:00 AM</b>.</p>
+        <div class="grid">
+            <div class="card" data-tilt data-tilt-max="15">
+                <h4 style="color: var(--accent-neon);">01. The Brew Upgrade</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Complimentary iced matcha or premium espresso beverage with your standard ₱80 entry block.</p>
+            </div>
+            <div class="card" data-tilt data-tilt-max="15">
+                <h4 style="color: var(--accent-neon);">02. Seat Immunity</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Reserve the premium ergonomic dual-monitor setup pods completely free of additional charges.</p>
+            </div>
+            <div class="card" data-tilt data-tilt-max="15">
+                <h4 style="color: var(--accent-neon);">03. Rise & Save</h4>
+                <p style="margin-top: 0.5rem; color: var(--text-muted);">Log over 4 early hours and lock in a flat loyalty discount rate of just ₱70/hr for your stay.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Interactive Smart Calculator -->
+    <section id="calculator" class="container">
+        <h2 class="section-title">Plan Your Stay</h2>
+        <p class="section-subtitle">Use our smart estimator to lock in your duration and pay online or in-store.</p>
+        
+        <div class="calculator-box" data-tilt data-tilt-max="2" data-tilt-speed="1000">
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 1; min-width: 150px; margin-bottom: 0;">
+                    <label for="pax">Number of People:</label>
+                    <input type="number" id="pax" min="1" max="20" value="1" oninput="calculateTotal()">
+                </div>
+                <div class="form-group" style="flex: 2; min-width: 200px; margin-bottom: 0;">
+                    <label for="durationType">Booking Type:</label>
+                    <select id="durationType" onchange="calculateTotal()">
+                        <option value="hourly">Hourly Sprint</option>
+                        <option value="daily">Daily Pass</option>
+                        <option value="weekly">Weekly Pass (Mon-Fri)</option>
+                        <option value="monthly">Monthly Access</option>
+                        <option value="annually">Annual Membership</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="durationValue" id="durationLabel">How many hours?</label>
+                <input type="number" id="durationValue" min="1" max="365" value="3" oninput="calculateTotal()">
+            </div>
+            
+            <div class="form-group" id="arrivalGroup">
+                <label for="arrival">Arrival Window Plan:</label>
+                <select id="arrival" onchange="calculateTotal()">
+                    <option value="standard">Standard Time (After 9:00 AM)</option>
+                    <option value="earlybird">Early Bird (6:00 AM - 9:00 AM)</option>
+                </select>
+            </div>
+
+            <div id="conference-alert" class="highlight-alert" style="border-color: #3b82f6; color: #60a5fa; background: rgba(59, 130, 246, 0.15);">
+                🏢 <b>Boardroom Unlocked!</b> For groups of 10-12, you automatically get exclusive access to the private Conference Room at a flat group rate.
+            </div>
+            
+            <div id="perk-alert" class="highlight-alert">
+                🌅 <b>Early Bird Applied!</b> Discounted rate applied and premium brew included!
+            </div>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0 1.5rem 0;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; transform: translateZ(30px);">
+                <h4>Total Cost:</h4>
+                <div id="total-price" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-neon);">₱240</div>
+            </div>
+            
+            <button class="btn" style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 1rem;" onclick="openPaymentModal()">Book & Choose Payment</button>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2 style="margin-bottom: 0.5rem; text-align: center;">Complete Booking</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 1.5rem;">Amount Due: <b id="modal-total" style="color: var(--accent-neon); font-size: 1.2rem;">₱0</b></p>
+            
+            <h4 style="margin-bottom: 1rem;">Online Payment</h4>
+            <div class="payment-grid">
+                <div class="payment-option" onclick="processPayment('GCash')">
+                    <span>📱</span>
+                    <p>GCash</p>
+                </div>
+                <div class="payment-option" onclick="processPayment('Maya')">
+                    <span>💳</span>
+                    <p>Maya</p>
+                </div>
+                <div class="payment-option" onclick="processPayment('Bank Transfer')">
+                    <span>🏦</span>
+                    <p>InstaPay / Bank</p>
+                </div>
+                <div class="payment-option" onclick="processPayment('Visa / Mastercard')">
+                    <span>🪪</span>
+                    <p>Visa / Master</p>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 1.5rem 0;">
+
+            <h4 style="margin-bottom: 1rem;">In-Person Transaction</h4>
+            <div class="payment-option" style="display: flex; justify-content: center; align-items: center; gap: 10px;" onclick="processPayment('Cash / Over the Counter')">
+                <span style="margin: 0;">💵</span>
+                <p style="font-size: 1rem;">Pay Cash at Counter</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 1rem; letter-spacing: 1px;">MENORAH</div>
+        <p>&copy; 2026 Menorah Co Working Space. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem;">Tungkong Manga, San Jose Del Monte, Bulacan</p>
+    </footer>
+
+    <!-- EXTERNAL 3D JAVASCRIPT LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Initialize 3D Background Effect
+        window.addEventListener('DOMContentLoaded', () => {
+            VANTA.NET({
+                el: "#vanta-canvas",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x00f2fe, 
+                backgroundColor: 0x0f172a, 
+                points: 12.00,
+                maxDistance: 22.00,
+                spacing: 18.00
+            });
+        });
+
+        // Advanced Calculator Logic
+        let currentTotal = 0;
+
+        function calculateTotal() {
+            const paxInput = parseInt(document.getElementById('pax').value) || 1;
+            const durationType = document.getElementById('durationType').value;
+            const durationValue = parseInt(document.getElementById('durationValue').value) || 1;
+            const arrivalTime = document.getElementById('arrival').value;
+            
+            const durationLabel = document.getElementById('durationLabel');
+            const arrivalGroup = document.getElementById('arrivalGroup');
+            const perkAlert = document.getElementById('perk-alert');
+            const conferenceAlert = document.getElementById('conference-alert');
+            const totalDisplay = document.getElementById('total-price');
+            
+            let total = 0;
+
+            // Reset UI
+            perkAlert.style.display = 'none';
+            conferenceAlert.style.display = 'none';
+
+            // Update Labels based on Type
+            if(durationType === 'hourly') durationLabel.innerText = "How many hours?";
+            if(durationType === 'daily') durationLabel.innerText = "How many days?";
+            if(durationType === 'weekly') durationLabel.innerText = "How many weeks?";
+            if(durationType === 'monthly') durationLabel.innerText = "How many months?";
+            if(durationType === 'annually') durationLabel.innerText = "How many years?";
+
+            // Show/Hide Arrival Window (Only relevant for Hourly/Daily)
+            if (durationType === 'hourly' || durationType === 'daily') {
+                arrivalGroup.style.display = 'block';
+            } else {
+                arrivalGroup.style.display = 'none';
+            }
+
+            // Group Conference Logic (10 to 12 people)
+            if (paxInput >= 10 && paxInput <= 12) {
+                conferenceAlert.style.display = 'block';
+                
+                // Flat rates for the whole room
+                let flatRates = {
+                    hourly: 700,
+                    daily: 3000,
+                    weekly: 12000,
+                    monthly: 40000,
+                    annually: 400000
+                };
+                total = durationValue * flatRates[durationType]; 
+            } else {
+                // Standard Individual Rates
+                let baseRates = {
+                    hourly: 80,
+                    daily: 350,
+                    weekly: 1500,
+                    monthly: 5000,
+                    annually: 50000
+                };
+
+                let rate = baseRates[durationType];
+
+                // Early Bird Discount (Only applies to Hourly/Daily for individuals)
+                if ((durationType === 'hourly' || durationType === 'daily') && arrivalTime === 'earlybird') {
+                    if (durationType === 'hourly') rate = 70; // Discounted hourly
+                    if (durationType === 'daily') rate = 300; // Discounted daily
+                    perkAlert.style.display = 'block';
+                }
+
+                total = paxInput * durationValue * rate;
+            }
+
+            currentTotal = total;
+            totalDisplay.innerText = `₱${total.toLocaleString()}`;
+        }
+
+        // Modal Functions
+        function openPaymentModal() {
+            document.getElementById('modal-total').innerText = `₱${currentTotal.toLocaleString()}`;
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function processPayment(method) {
+            alert(`Redirecting to ${method} secure payment gateway...\n\n(In production, this will load the payment provider's API).`);
+            closePaymentModal();
+        }
+
+        // Sharing Logic
+        function shareBusiness() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Menorah Co Working Space',
+                    text: 'Check out Menorah Co Working Space in SJDM! Super aesthetic vibe for pros & students.',
+                    url: window.location.href,
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Promo link copied! Paste it on your feed to get your free hour credits.');
+            }
+        }
+
+        // Initialize Calculator
+        calculateTotal();
+    </script>
+</body>
+</html>

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Portal | Menorah Co-Working</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -20,330 +18,358 @@
             --glass-border: 1px solid rgba(255, 255, 255, 0.1);
             --success: #10b981;
             --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
+        /* Mobile Header */
+        .mobile-header {
+            display: none; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem; background: var(--sidebar-bg); border-bottom: var(--glass-border);
+            position: fixed; width: 100%; top: 0; z-index: 998;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: var(--glass-border);
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
+            width: 260px; background: var(--sidebar-bg); border-right: var(--glass-border);
+            padding: 2rem 1.5rem; display: flex; flex-direction: column; transition: 0.3s;
+            z-index: 1000;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 3rem;
-            letter-spacing: 1px;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 1rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--accent-neon);
-        }
+        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 3rem; }
+        .menu-item { display: flex; align-items: center; gap: 12px; padding: 1rem; color: var(--text-muted); text-decoration: none; border-radius: 8px; margin-bottom: 0.5rem; font-weight: 600; transition: 0.3s; cursor: pointer; }
+        .menu-item:hover, .menu-item.active { background: rgba(0, 242, 254, 0.1); color: var(--accent-neon); }
 
         /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 2.5rem 3rem;
-            overflow-y: auto;
-        }
+        .main-content { flex: 1; padding: 2.5rem 3rem; overflow-y: auto; height: 100vh; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .header h1 { font-size: 2rem; font-weight: 800; }
+        .admin-profile { display: flex; align-items: center; gap: 10px; background: var(--card-bg); padding: 0.5rem 1rem; border-radius: 50px; border: var(--glass-border); cursor: pointer; }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-        }
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .kpi-card { background: var(--card-bg); border: var(--glass-border); border-radius: 16px; padding: 1.5rem; position: relative; }
+        .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-neon); }
+        .kpi-title { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .kpi-value { font-size: 2.2rem; font-weight: 800; }
+        .kpi-value span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
 
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 800;
-        }
-
-        .admin-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--card-bg);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            border: var(--glass-border);
-        }
-
-        /* KPI Cards */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .kpi-card {
-            background: var(--card-bg);
-            border: var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--accent-neon);
-        }
-
-        .kpi-title {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .kpi-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-        }
-
-        .kpi-value span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        /* Reservation Table */
-        .section-box {
-            background: var(--card-bg);
-            border: var(--glass-border);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: var(--glass-border);
-        }
-
-        th {
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
+        /* Tables */
+        .section-box { background: var(--card-bg); border: var(--glass-border); border-radius: 16px; padding: 2rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 1rem; text-align: left; border-bottom: var(--glass-border); }
+        th { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
+        .status-badge { padding: 4px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: bold; }
         .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
         .status-active { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .status-denied { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        
+        .action-btn { background: transparent; border: 1px solid var(--accent-neon); color: var(--accent-neon); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-right: 5px; margin-bottom: 5px; }
+        .action-btn:hover { background: var(--accent-neon); color: #000; }
+        .deny-btn { border-color: var(--danger); color: var(--danger); }
+        .deny-btn:hover { background: var(--danger); color: white; }
 
-        .action-btn {
-            background: transparent;
-            border: 1px solid var(--accent-neon);
-            color: var(--accent-neon);
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+        /* Modals */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); z-index: 10000; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: #1e293b; border: 1px solid var(--accent-neon); border-radius: 20px; padding: 2rem; width: 90%; max-width: 450px; position: relative; transform: translateY(-20px); transition: 0.3s; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+        
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
+        .form-group input, .form-group select { width: 100%; padding: 0.8rem; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 8px; }
+        .btn-full { width: 100%; background: var(--gradient-primary); color: black; padding: 1rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 1rem; }
 
-        .action-btn:hover {
-            background: var(--accent-neon);
-            color: #000;
-        }
+        /* Toast Notifications */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 10001; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: rgba(16, 185, 129, 0.15); border: 1px solid var(--success); color: var(--success); padding: 1rem 1.5rem; border-radius: 8px; backdrop-filter: blur(10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; transform: translateX(120%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: 600; }
+        .toast.show { transform: translateX(0); }
+        .toast.error { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
 
-        .deny-btn {
-            border-color: #ef4444;
-            color: #ef4444;
-            margin-left: 8px;
-        }
-
-        .deny-btn:hover {
-            background: #ef4444;
-            color: white;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-header { display: flex; }
+            .sidebar { position: fixed; left: -100%; height: 100vh; }
+            .sidebar.active { left: 0; }
+            .main-content { padding: 5.5rem 1rem 2rem 1rem; }
+            .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-        <div class="logo">MENORAH ADMIN</div>
-        
-        <a href="#" class="menu-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-        <a href="#" class="menu-item"><i data-lucide="calendar-check"></i> Reservations</a>
-        <a href="#" class="menu-item"><i data-lucide="users"></i> Customers</a>
-        <a href="#" class="menu-item"><i data-lucide="credit-card"></i> Payments</a>
-        <a href="#" class="menu-item" style="margin-top: auto;"><i data-lucide="settings"></i> Settings</a>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="logo" style="margin: 0; font-size: 1.2rem;">MENORAH ADMIN</div>
+        <i data-lucide="menu" onclick="toggleSidebar()" style="cursor: pointer;"></i>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo" style="display: flex; justify-content: space-between;">
+            MENORAH ADMIN
+            <i data-lucide="x" class="mobile-close" onclick="toggleSidebar()" style="cursor: pointer; display: none;"></i>
+        </div>
+        <a class="menu-item active" onclick="showToast('Dashboard refreshed!', 'success')"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="menu-item" onclick="openModal('settingsModal')"><i data-lucide="users"></i> Manage Users</a>
+        <a class="menu-item" onclick="showToast('Generating Finance Report...', 'success')"><i data-lucide="credit-card"></i> Finance</a>
+        <a class="menu-item" style="margin-top: auto;" onclick="openModal('settingsModal')"><i data-lucide="settings"></i> System Settings</a>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <main class="main-content">
-        
         <header class="header">
             <div>
                 <h1>Overview</h1>
-                <p style="color: var(--text-muted);">Welcome back, Manager. Here is today's status.</p>
+                <p style="color: var(--text-muted);">Live operations dashboard.</p>
             </div>
-            <div class="admin-profile">
+            <div class="admin-profile" onclick="openModal('settingsModal')">
                 <i data-lucide="user-circle" style="color: var(--accent-neon);"></i>
                 <span style="font-weight: 600; font-size: 0.9rem;">Admin Desk</span>
             </div>
         </header>
 
-        <!-- Live KPI Stats (Mock Data) -->
         <div class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-title">Available Hot Desks</div>
-                <div class="kpi-value" id="available-slots">14 <span>/ 30</span></div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">Conference Room Status</div>
-                <div class="kpi-value" style="color: var(--warning); font-size: 1.5rem; margin-top: 10px;">Occupied until 3 PM</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-title">Today's Est. Revenue</div>
-                <div class="kpi-value">₱4,250</div>
+                <div class="kpi-value" id="slot-counter">14 <span>/ 30</span></div>
             </div>
             <div class="kpi-card" style="border-color: var(--warning);">
-                <div class="kpi-title" style="color: var(--warning);">Pending Inquiries</div>
-                <div class="kpi-value">2 <span>Action Required</span></div>
+                <div class="kpi-title" style="color: var(--warning);">Action Required</div>
+                <div class="kpi-value" id="pending-counter">2 <span>Pending</span></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Today's Revenue</div>
+                <div class="kpi-value">₱4,250</div>
             </div>
         </div>
 
-        <!-- Reservation Table (Mock Data) -->
         <div class="section-box">
             <div class="section-header">
-                <h2>Live Bookings & Requests</h2>
-                <button class="action-btn" style="background: var(--accent-neon); color: black;" onclick="mockAlert('Creating new walk-in reservation...')"><i data-lucide="plus" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"></i> Walk-In</button>
+                <h2>Live Bookings</h2>
+                <button class="action-btn" style="background: var(--accent-neon); color: black;" onclick="openModal('walkinModal')">
+                    <i data-lucide="plus" style="width: 16px; height: 16px; display: inline-block;"></i> Walk-In
+                </button>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Plan Details</th>
-                        <th>Time / Duration</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Mock Pending Row 1 -->
-                    <tr id="row-1">
-                        <td style="font-weight: 600;">Mark Bautista</td>
-                        <td>Conference Room</td>
-                        <td>4:00 PM (2 Hours)</td>
-                        <td><span class="status-badge status-pending">Pending Approval</span></td>
-                        <td>
-                            <button class="action-btn" onclick="approveBooking('row-1')">Approve</button>
-                            <button class="action-btn deny-btn" onclick="mockAlert('Request Denied. Customer notified.')">Deny</button>
-                        </td>
-                    </tr>
-                    <!-- Mock Pending Row 2 -->
-                    <tr id="row-2">
-                        <td style="font-weight: 600;">Sarah Geronimo</td>
-                        <td>Student Day Pass</td>
-                        <td>Tomorrow, 8:00 AM</td>
-                        <td><span class="status-badge status-pending">Payment Verifying</span></td>
-                        <td>
-                            <button class="action-btn" onclick="approveBooking('row-2')">Confirm</button>
-                        </td>
-                    </tr>
-                    <!-- Mock Active Row 1 -->
-                    <tr>
-                        <td style="font-weight: 600;">John Doe</td>
-                        <td>Hourly Sprint</td>
-                        <td>Currently Active (1hr left)</td>
-                        <td><span class="status-badge status-active">Checked In</span></td>
-                        <td>
-                            <button class="action-btn" style="border-color: var(--text-muted); color: var(--text-muted);" onclick="mockAlert('Checking out John Doe...')">Check Out</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Plan Details</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booking-table">
+                        <!-- Pending Request -->
+                        <tr id="row-1">
+                            <td style="font-weight: 600;">Mark Bautista</td>
+                            <td>Conference Room</td>
+                            <td>4:00 PM</td>
+                            <td><span class="status-badge status-pending">Pending Approval</span></td>
+                            <td>
+                                <button class="action-btn" onclick="openApproveModal('row-1')">Approve</button>
+                                <button class="action-btn deny-btn" onclick="openDenyModal('row-1')">Deny</button>
+                            </td>
+                        </tr>
+                        <!-- Verifying Request -->
+                        <tr id="row-2">
+                            <td style="font-weight: 600;">Sarah Geronimo</td>
+                            <td>Student Pass</td>
+                            <td>8:00 AM</td>
+                            <td><span class="status-badge status-pending">Verifying GCash</span></td>
+                            <td>
+                                <button class="action-btn" onclick="openApproveModal('row-2')">Confirm</button>
+                            </td>
+                        </tr>
+                        <!-- Active Booking -->
+                        <tr>
+                            <td style="font-weight: 600;">John Doe</td>
+                            <td>Hourly Sprint</td>
+                            <td>Checked In</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td><button class="action-btn" style="border-color: var(--text-muted); color: var(--text-muted);" onclick="showToast('Customer Checked Out!', 'success')">Check Out</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
     </main>
 
-    <!-- Interactive Script for the Presentation -->
+    <!-- Walk-In Modal -->
+    <div class="modal-overlay" id="walkinModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('walkinModal')">&times;</span>
+            <h2 style="margin-bottom: 1.5rem;">New Walk-In</h2>
+            <form onsubmit="submitWalkIn(event)">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="walkin-name" required placeholder="e.g. Alex Creator">
+                </div>
+                <div class="form-group">
+                    <label>Pass Type</label>
+                    <select id="walkin-plan">
+                        <option>Hourly Sprint</option>
+                        <option>Student Day Pass</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method Collected</label>
+                    <select>
+                        <option>Cash</option>
+                        <option>GCash QR</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-full">Create & Check-In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Approve Modal -->
+    <div class="modal-overlay" id="approveModal">
+        <div class="modal-content" style="text-align: center;">
+            <i data-lucide="check-circle" style="color: var(--success); width: 64px; height: 64px; margin-bottom: 1rem;"></i>
+            <h2 style="margin-bottom: 1rem;">Approve Booking?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">This will send an automated confirmation email to the customer and update live availability.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-full" style="background: transparent; border: 1px solid var(--text-muted); color: white; margin-top: 0;" onclick="closeModal('approveModal')">Cancel</button>
+                <button class="btn-full" style="margin-top: 0;" onclick="confirmApprove()">Yes, Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deny Modal -->
+    <div class="modal-overlay" id="denyModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem; color: var(--danger);">Deny Request</h2>
+            <div class="form-group">
+                <label>Reason for Denial (Sent to customer)</label>
+                <select>
+                    <option>Fully Booked at requested time</option>
+                    <option>Payment Verification Failed</option>
+                    <option>Outside Operating Hours</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 1rem;">
+                <button class="btn-full" style="background: transparent; border: 1px solid var(--text-muted); color: white; margin-top: 0;" onclick="closeModal('denyModal')">Cancel</button>
+                <button class="btn-full" style="background: var(--danger); color: white; margin-top: 0;" onclick="confirmDeny()">Deny Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Settings Modal (Mock) -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content" style="text-align: center;">
+            <i data-lucide="lock" style="color: var(--accent-neon); width: 64px; height: 64px; margin-bottom: 1rem;"></i>
+            <h2 style="margin-bottom: 1rem;">Admin Access Required</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">This feature requires SuperAdmin clearance. (Mock feature for demo purposes).</p>
+            <button class="btn-full" onclick="closeModal('settingsModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Pitch Mode Navigation -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10002; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent-neon); padding: 10px 20px; border-radius: 50px; display: flex; gap: 15px; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2); backdrop-filter: blur(10px); align-items: center;">
+        <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Demo Nav:</span>
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;"><i data-lucide="layout-template" style="width: 14px;"></i> Home</a>
+        <a href="admin.html" style="color: var(--accent-neon); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;"><i data-lucide="shield-check" style="width: 14px;"></i> Admin</a>
+        <a href="user-dashboard.html" style="color: white; text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 5px;"><i data-lucide="user" style="width: 14px;"></i> User</a>
+    </div>
+
     <script>
         lucide.createIcons();
+        let currentRow = null;
+        let pendingCount = 2;
+        let slotsAvailable = 14;
 
-        // This function simulates approving a booking to impress the investor
-        function approveBooking(rowId) {
-            const row = document.getElementById(rowId);
-            
-            // Change the status badge text and color to simulate database update
-            const badge = row.querySelector('.status-badge');
-            badge.className = 'status-badge status-active';
-            badge.innerText = 'Approved & Booked';
-
-            // Remove the buttons to show it's completed
-            const actionCell = row.querySelectorAll('td')[4];
-            actionCell.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">No action needed</span>';
-
-            // Simulate updating the available slots capacity
-            const slotDisplay = document.getElementById('available-slots');
-            slotDisplay.innerHTML = '13 <span>/ 30</span>';
-
-            alert('Mock System: Booking Approved! An automated confirmation email has been sent to the customer.');
+        // Mobile Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
         }
 
-        function mockAlert(message) {
-            alert('Mock System: ' + message);
+        // Modals
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Action Modals
+        function openApproveModal(rowId) { currentRow = rowId; openModal('approveModal'); }
+        function openDenyModal(rowId) { currentRow = rowId; openModal('denyModal'); }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'error' ? 'error' : ''}`;
+            toast.innerHTML = `<i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle'}"></i> ${message}`;
+            container.appendChild(toast);
+            lucide.createIcons(); // Render the new icon
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function updateCounters(pendingMod, slotMod) {
+            pendingCount += pendingMod;
+            slotsAvailable += slotMod;
+            document.getElementById('pending-counter').innerHTML = `${pendingCount} <span>Pending</span>`;
+            document.getElementById('slot-counter').innerHTML = `${slotsAvailable} <span>/ 30</span>`;
+        }
+
+        // Confirm Actions
+        function confirmApprove() {
+            if(currentRow) {
+                const row = document.getElementById(currentRow);
+                row.cells[3].innerHTML = '<span class="status-badge status-active">Approved</span>';
+                row.cells[4].innerHTML = '<span style="color:var(--text-muted);font-size:0.8rem;">Auto-Mailed</span>';
+                updateCounters(-1, -1);
+                showToast('Booking Approved. System updated.');
+            }
+            closeModal('approveModal');
+        }
+
+        function confirmDeny() {
+            if(currentRow) {
+                const row = document.getElementById(currentRow);
+                row.cells[3].innerHTML = '<span class="status-badge status-denied">Denied</span>';
+                row.cells[4].innerHTML = '<span style="color:var(--text-muted);font-size:0.8rem;">Archived</span>';
+                updateCounters(-1, 0);
+                showToast('Request denied. Customer notified.', 'error');
+            }
+            closeModal('denyModal');
+        }
+
+        // Add Walk-in
+        function submitWalkIn(e) {
+            e.preventDefault();
+            const name = document.getElementById('walkin-name').value;
+            const plan = document.getElementById('walkin-plan').value;
+            
+            const table = document.getElementById('booking-table');
+            const newRow = table.insertRow(0); // Insert at top
+            newRow.innerHTML = `
+                <td style="font-weight: 600;">${name}</td>
+                <td>${plan}</td>
+                <td>Just Now</td>
+                <td><span class="status-badge status-active">Walk-In</span></td>
+                <td><button class="action-btn" style="border-color: var(--text-muted); color: var(--text-muted);" onclick="showToast('Customer Checked Out!', 'success')">Check Out</button></td>
+            `;
+            
+            updateCounters(0, -1); // Reduce capacity
+            closeModal('walkinModal');
+            document.getElementById('walkin-name').value = ''; // reset form
+            showToast(`${name} checked in successfully!`);
         }
     </script>
 </body>

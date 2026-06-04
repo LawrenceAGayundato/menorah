@@ -296,7 +296,6 @@
 
         .highlighted-amenity h4 { color: var(--accent-neon); }
 
-        /* Modern SVG Icon Styling */
         .amenity-icon i {
             color: var(--accent-neon);
             width: 48px;
@@ -337,7 +336,7 @@
             position: relative;
         }
 
-        /* Interactive Calculator */
+        /* Interactive Calculator & Booking Box */
         .calculator-box {
             background: var(--card-bg);
             border-radius: 16px;
@@ -498,9 +497,7 @@
             border-top: var(--glass-border);
         }
 
-        /* =========================================
-           MOBILE RESPONSIVE MEDIA QUERIES
-           ========================================= */
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .hamburger { display: block; }
             
@@ -534,23 +531,6 @@
         }
     </style>
 </head>
-
-    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent-neon); padding: 10px 20px; border-radius: 50px; display: flex; gap: 15px; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2); backdrop-filter: blur(10px); align-items: center;">
-        <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-right: 5px;">Demo Nav:</span>
-        
-        <a href="index.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
-            <i data-lucide="layout-template" style="width: 14px; height: 14px;"></i> Home
-        </a>
-        
-        <a href="admin.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
-            <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i> Admin
-        </a>
-        
-        <a href="user-dashboard.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
-            <i data-lucide="user" style="width: 14px; height: 14px;"></i> User
-        </a>
-    </div>
-    
 <body>
 
     <!-- Header Navigation -->
@@ -699,10 +679,10 @@
         </div>
     </section>
 
-    <!-- Advanced Interactive Smart Calculator -->
+    <!-- Live Booking Integration / Calculator -->
     <section id="calculator" class="container">
-        <h2 class="section-title">Plan Your Stay</h2>
-        <p class="section-subtitle">Use our smart estimator to lock in your duration and pay online or in-store.</p>
+        <h2 class="section-title">Reserve Your Spot</h2>
+        <p class="section-subtitle">Check live availability and book your desk directly below.</p>
         
         <div class="calculator-box" data-tilt data-tilt-max="2" data-tilt-speed="1000">
             
@@ -754,6 +734,8 @@
             </div>
             
             <button class="btn" style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 1rem;" onclick="openPaymentModal()">Book & Choose Payment</button>
+            
+            <!-- Future Note for Solution A: You can replace this entire 'calculator-box' div with the Calendly embed code when ready! -->
         </div>
     </section>
 
@@ -804,7 +786,6 @@
     <!-- EXTERNAL 3D JAVASCRIPT LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <!-- On touch devices, vanilla tilt generally degrades gracefully to regular cards -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <!-- Interactive Logic -->
@@ -815,12 +796,10 @@
         // Mobile Navigation Toggle Logic
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
-            // Prevent scrolling on body when menu is open
             if(navMenu.classList.contains('active')){
                 navMenu.classList.remove('active');
                 document.body.style.overflow = 'auto';
             } else {
-                // If the screen width is small (mobile), trigger the menu logic
                 if(window.innerWidth <= 768) {
                     navMenu.classList.add('active');
                     document.body.style.overflow = 'hidden';
@@ -884,7 +863,7 @@
 
             // Group Conference Logic (10 to 12 people)
             if (paxInput >= 10 && paxInput <= 12) {
-                conferenceAlert.style.display = 'flex'; // Use flex for icon alignment
+                conferenceAlert.style.display = 'flex'; 
                 
                 let flatRates = {
                     hourly: 700,
@@ -909,7 +888,7 @@
                 if ((durationType === 'hourly' || durationType === 'daily') && arrivalTime === 'earlybird') {
                     if (durationType === 'hourly') rate = 70; 
                     if (durationType === 'daily') rate = 300; 
-                    perkAlert.style.display = 'flex'; // Use flex for icon alignment
+                    perkAlert.style.display = 'flex'; 
                 }
 
                 total = paxInput * durationValue * rate;
@@ -951,5 +930,25 @@
         // Initialize Calculator
         calculateTotal();
     </script>
+
+    <!-- ==========================================
+         PITCH MODE DEMO NAVIGATION (For Investor Presentation)
+         ========================================== -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent-neon); padding: 10px 20px; border-radius: 50px; display: flex; gap: 15px; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2); backdrop-filter: blur(10px); align-items: center;">
+        <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-right: 5px;">Demo Nav:</span>
+        
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
+            <i data-lucide="layout-template" style="width: 14px; height: 14px;"></i> Home
+        </a>
+        
+        <a href="admin.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
+            <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i> Admin
+        </a>
+        
+        <a href="user-dashboard.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s;" onmouseover="this.style.color='#00f2fe'" onmouseout="this.style.color='white'">
+            <i data-lucide="user" style="width: 14px; height: 14px;"></i> User
+        </a>
+    </div>
+
 </body>
 </html>

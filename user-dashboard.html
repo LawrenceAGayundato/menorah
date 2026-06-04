@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | Menorah Co-Working</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Modern Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --sidebar-bg: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --accent-neon: #00f2fe;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: var(--glass-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-neon);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 3rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: var(--glass-border);
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-neon);
+        }
+
+        .kpi-title {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .kpi-value span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Active Booking Banner */
+        .active-booking {
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.15) 0%, rgba(79, 172, 254, 0.05) 100%);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .active-booking-details h3 {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .active-booking-details p {
+            color: var(--accent-neon);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qr-mockup {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sections & Tables */
+        .section-box {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: var(--glass-border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-upcoming { background: rgba(0, 242, 254, 0.2); color: var(--accent-neon); }
+        .status-completed { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .status-cancelled { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+        .btn {
+            background: var(--gradient-primary);
+            color: #000;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-neon);
+            color: var(--accent-neon);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; padding: 1rem; border-right: none; border-bottom: var(--glass-border); }
+            .logo { margin-bottom: 1rem; text-align: center; }
+            .menu-item { display: inline-flex; margin-right: 10px; padding: 0.5rem; }
+            .main-content { padding: 1.5rem; }
+            .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .active-booking { flex-direction: column; text-align: center; }
+            .active-booking-details p { justify-content: center; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo">MENORAH</div>
+        
+        <a href="#" class="menu-item active"><i data-lucide="home"></i> Dashboard</a>
+        <a href="#" class="menu-item"><i data-lucide="calendar"></i> My Bookings</a>
+        <a href="#" class="menu-item"><i data-lucide="award"></i> Rewards</a>
+        <a href="#" class="menu-item"><i data-lucide="receipt"></i> Billing</a>
+        <a href="#" class="menu-item" style="margin-top: auto;"><i data-lucide="settings"></i> Account Settings</a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        
+        <header class="header">
+            <div>
+                <h1>Hello, Alex! 👋</h1>
+                <p style="color: var(--text-muted);">Ready to crush your goals today?</p>
+            </div>
+            <div class="user-profile">
+                <i data-lucide="user-circle" style="color: var(--accent-neon);"></i>
+                <span style="font-weight: 600; font-size: 0.9rem;">Alex Creator</span>
+            </div>
+        </header>
+
+        <!-- Current Active Booking Banner -->
+        <div class="active-booking" id="active-booking-card">
+            <div class="active-booking-details">
+                <span class="status-badge status-upcoming" style="margin-bottom: 10px; display: inline-block;">UPCOMING TODAY</span>
+                <h3>Student Day Pass</h3>
+                <p><i data-lucide="clock" style="width: 18px;"></i> Check-in: 10:00 AM</p>
+                <p style="color: var(--text-muted); font-weight: 400; font-size: 0.9rem; margin-top: 10px;">Includes unlimited brewed coffee & ergo chair access.</p>
+            </div>
+            <div style="text-align: center;">
+                <div class="qr-mockup">
+                    <!-- Mock QR Code using Lucide icon for presentation purposes -->
+                    <i data-lucide="qr-code" style="color: black; width: 64px; height: 64px;"></i>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 8px; color: var(--text-muted);">Scan at Front Desk</p>
+            </div>
+        </div>
+
+        <!-- Live KPI Stats (User Context) -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title"><i data-lucide="clock-4" style="width: 16px;"></i> Hours Logged</div>
+                <div class="kpi-value">42 <span>hrs this month</span></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title"><i data-lucide="flame" style="width: 16px; color: var(--warning);"></i> Loyalty Points</div>
+                <div class="kpi-value">350 <span>pts</span></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title"><i data-lucide="gift" style="width: 16px; color: var(--success);"></i> Rewards Available</div>
+                <div class="kpi-value">2 <span>Free Hours</span></div>
+            </div>
+        </div>
+
+        <!-- Booking History Table -->
+        <div class="section-box">
+            <div class="section-header">
+                <h2>Booking History</h2>
+                <a href="index.html#booking" class="btn"><i data-lucide="plus" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"></i> New Booking</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Pass Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Mock Upcoming Row -->
+                    <tr id="booking-1">
+                        <td style="font-weight: 600;">Today, 10:00 AM</td>
+                        <td>Student Day Pass</td>
+                        <td>₱350</td>
+                        <td><span class="status-badge status-upcoming">Upcoming</span></td>
+                        <td>
+                            <button class="btn-outline" onclick="cancelBooking('booking-1')">Cancel</button>
+                        </td>
+                    </tr>
+                    <!-- Mock Completed Row -->
+                    <tr>
+                        <td style="font-weight: 600;">Oct 12, 2026</td>
+                        <td>Hourly Sprint (3 hrs)</td>
+                        <td>₱240</td>
+                        <td><span class="status-badge status-completed">Completed</span></td>
+                        <td>
+                            <button class="btn-outline" style="border: none; color: var(--text-muted);" onclick="downloadInvoice()">
+                                <i data-lucide="download" style="width: 18px;"></i> Receipt
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Mock Completed Row 2 -->
+                    <tr>
+                        <td style="font-weight: 600;">Oct 05, 2026</td>
+                        <td>Conference Room (2 hrs)</td>
+                        <td>₱1,400</td>
+                        <td><span class="status-badge status-completed">Completed</span></td>
+                        <td>
+                            <button class="btn-outline" style="border: none; color: var(--text-muted);" onclick="downloadInvoice()">
+                                <i data-lucide="download" style="width: 18px;"></i> Receipt
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- Interactive Script for the Presentation -->
+    <script>
+        // Render Icons
+        lucide.createIcons();
+
+        // Simulate cancelling a booking for the investor presentation
+        function cancelBooking(rowId) {
+            if(confirm('Are you sure you want to cancel this booking?')) {
+                const row = document.getElementById(rowId);
+                
+                // Update badge
+                const badge = row.querySelector('.status-badge');
+                badge.className = 'status-badge status-cancelled';
+                badge.innerText = 'Cancelled';
+
+                // Remove Cancel Button
+                const actionCell = row.querySelectorAll('td')[4];
+                actionCell.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">Refunded to Maya</span>';
+
+                // Hide the big active banner
+                document.getElementById('active-booking-card').style.display = 'none';
+
+                alert('Mock System: Booking successfully cancelled. The slot has been returned to the public calendar.');
+            }
+        }
+
+        // Simulate downloading a receipt
+        function downloadInvoice() {
+            alert('Mock System: Generating PDF receipt...\n\n(In a live app, this downloads a tax-compliant PDF receipt).');
+        }
+    </script>
+</body>
+</html>

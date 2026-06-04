@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Menorah Co-Working</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --sidebar-bg: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --accent-neon: #00f2fe;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: var(--glass-border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-neon);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 3rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: var(--glass-border);
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-neon);
+        }
+
+        .kpi-title {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .kpi-value span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Reservation Table */
+        .section-box {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: var(--glass-border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .status-active { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--accent-neon);
+            color: var(--accent-neon);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-neon);
+            color: #000;
+        }
+
+        .deny-btn {
+            border-color: #ef4444;
+            color: #ef4444;
+            margin-left: 8px;
+        }
+
+        .deny-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo">MENORAH ADMIN</div>
+        
+        <a href="#" class="menu-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a href="#" class="menu-item"><i data-lucide="calendar-check"></i> Reservations</a>
+        <a href="#" class="menu-item"><i data-lucide="users"></i> Customers</a>
+        <a href="#" class="menu-item"><i data-lucide="credit-card"></i> Payments</a>
+        <a href="#" class="menu-item" style="margin-top: auto;"><i data-lucide="settings"></i> Settings</a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        
+        <header class="header">
+            <div>
+                <h1>Overview</h1>
+                <p style="color: var(--text-muted);">Welcome back, Manager. Here is today's status.</p>
+            </div>
+            <div class="admin-profile">
+                <i data-lucide="user-circle" style="color: var(--accent-neon);"></i>
+                <span style="font-weight: 600; font-size: 0.9rem;">Admin Desk</span>
+            </div>
+        </header>
+
+        <!-- Live KPI Stats (Mock Data) -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">Available Hot Desks</div>
+                <div class="kpi-value" id="available-slots">14 <span>/ 30</span></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Conference Room Status</div>
+                <div class="kpi-value" style="color: var(--warning); font-size: 1.5rem; margin-top: 10px;">Occupied until 3 PM</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Today's Est. Revenue</div>
+                <div class="kpi-value">₱4,250</div>
+            </div>
+            <div class="kpi-card" style="border-color: var(--warning);">
+                <div class="kpi-title" style="color: var(--warning);">Pending Inquiries</div>
+                <div class="kpi-value">2 <span>Action Required</span></div>
+            </div>
+        </div>
+
+        <!-- Reservation Table (Mock Data) -->
+        <div class="section-box">
+            <div class="section-header">
+                <h2>Live Bookings & Requests</h2>
+                <button class="action-btn" style="background: var(--accent-neon); color: black;" onclick="mockAlert('Creating new walk-in reservation...')"><i data-lucide="plus" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"></i> Walk-In</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Plan Details</th>
+                        <th>Time / Duration</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Mock Pending Row 1 -->
+                    <tr id="row-1">
+                        <td style="font-weight: 600;">Mark Bautista</td>
+                        <td>Conference Room</td>
+                        <td>4:00 PM (2 Hours)</td>
+                        <td><span class="status-badge status-pending">Pending Approval</span></td>
+                        <td>
+                            <button class="action-btn" onclick="approveBooking('row-1')">Approve</button>
+                            <button class="action-btn deny-btn" onclick="mockAlert('Request Denied. Customer notified.')">Deny</button>
+                        </td>
+                    </tr>
+                    <!-- Mock Pending Row 2 -->
+                    <tr id="row-2">
+                        <td style="font-weight: 600;">Sarah Geronimo</td>
+                        <td>Student Day Pass</td>
+                        <td>Tomorrow, 8:00 AM</td>
+                        <td><span class="status-badge status-pending">Payment Verifying</span></td>
+                        <td>
+                            <button class="action-btn" onclick="approveBooking('row-2')">Confirm</button>
+                        </td>
+                    </tr>
+                    <!-- Mock Active Row 1 -->
+                    <tr>
+                        <td style="font-weight: 600;">John Doe</td>
+                        <td>Hourly Sprint</td>
+                        <td>Currently Active (1hr left)</td>
+                        <td><span class="status-badge status-active">Checked In</span></td>
+                        <td>
+                            <button class="action-btn" style="border-color: var(--text-muted); color: var(--text-muted);" onclick="mockAlert('Checking out John Doe...')">Check Out</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- Interactive Script for the Presentation -->
+    <script>
+        lucide.createIcons();
+
+        // This function simulates approving a booking to impress the investor
+        function approveBooking(rowId) {
+            const row = document.getElementById(rowId);
+            
+            // Change the status badge text and color to simulate database update
+            const badge = row.querySelector('.status-badge');
+            badge.className = 'status-badge status-active';
+            badge.innerText = 'Approved & Booked';
+
+            // Remove the buttons to show it's completed
+            const actionCell = row.querySelectorAll('td')[4];
+            actionCell.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">No action needed</span>';
+
+            // Simulate updating the available slots capacity
+            const slotDisplay = document.getElementById('available-slots');
+            slotDisplay.innerHTML = '13 <span>/ 30</span>';
+
+            alert('Mock System: Booking Approved! An automated confirmation email has been sent to the customer.');
+        }
+
+        function mockAlert(message) {
+            alert('Mock System: ' + message);
+        }
+    </script>
+</body>
+</html>
